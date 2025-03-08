@@ -8,7 +8,7 @@ export const protectRoute = async (req, res, next) => {
         .json({ message: "Unauthorized - you must be logged in." });
     }
 
-    next();
+    next(); 
   } catch (error) {
     console.log("Error in protect route", error);
     res.status(500).json({ message: error.message });
