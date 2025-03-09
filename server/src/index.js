@@ -15,7 +15,7 @@ import statRoutes from "./routes/stat.route.js";
 
 const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(clerkMiddleware());
