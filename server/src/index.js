@@ -22,10 +22,10 @@ app.use(clerkMiddleware());
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: path.join(__dirname, "temp"),
+    tempFileDir: path.join(__dirname, "tmp"),
     createParentPath: true,
     limits: {
-      fileSize: 10 * 1024 * 1024, // 10MB
+      fileSize: 10 * 1024 * 1024, // 10MB max file size
     },
     // abortOnLimit: true,
     // preserveExtension: true,
@@ -63,3 +63,5 @@ app.listen(PORT, () => {
   connectDB();
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
+
+// TODO: socket.io
