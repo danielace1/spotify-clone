@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import path from "path";
+import cors from "cors";
 // import { withAuth } from "@clerk/clerk-sdk-node";
 import { clerkMiddleware } from "@clerk/express";
 import fileUpload from "express-fileupload";
@@ -17,6 +18,12 @@ const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(clerkMiddleware());
 app.use(
@@ -27,13 +34,6 @@ app.use(
     limits: {
       fileSize: 10 * 1024 * 1024, // 10MB max file size
     },
-    // abortOnLimit: true,
-    // preserveExtension: true,
-    // safeFileNames: true,
-    // uploadDir: "./uploads/",
-    // rename: function (fieldname, filename) {
-    // return `${Date.now()}-${filename}`;
-    // },
   })
 );
 
