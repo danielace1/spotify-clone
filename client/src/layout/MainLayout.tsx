@@ -1,3 +1,4 @@
+import LeftSidebar from "@/components/LeftSidebar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -19,7 +20,7 @@ const MainLayout = () => {
           minSize={isMobile ? 0 : 10}
           maxSize={30}
         >
-          <div>Panel 1</div>
+          <LeftSidebar />
         </ResizablePanel>
 
         <ResizableHandle className="w-2 bg-black rounded-lg transition-colors" />
