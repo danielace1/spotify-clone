@@ -1,3 +1,4 @@
+import FriendsActivity from "@/components/FriendsActivity";
 import LeftSidebar from "@/components/LeftSidebar";
 import {
   ResizableHandle,
@@ -9,7 +10,7 @@ import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   const isMobile = false;
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
+    <div className="h-screen bg-black text-white flex flex-col m-3">
       <ResizablePanelGroup
         direction="horizontal"
         className="flex-1 flex h-full overflow-hidden"
@@ -39,7 +40,7 @@ const MainLayout = () => {
           maxSize={25}
           collapsedSize={0}
         >
-          <div>Panel 3</div>
+          <FriendsActivity />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

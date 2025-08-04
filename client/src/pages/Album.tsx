@@ -5,6 +5,12 @@ import { Clock, Pause, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+const formatDuration = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+};
+
 const Album = () => {
   const { albumId } = useParams();
 
@@ -18,14 +24,14 @@ const Album = () => {
 
   return (
     <div className="h-full">
-      <ScrollArea className="h-full">
+      <ScrollArea className="h-full rounded-md">
         <div className="relative min-h-full">
           <div
-            className="absolute inset-0 bg-gradient-to-b from-[#5038a0]/80 via-zinc-900/80 to-zinc-900 pointer-events-none"
+            className="absolute inset-0 bg-gradient-to-b from-[#5038a0]/80 via-zinc-900/80 to-zinc-900 pointer-events-none rounded-md"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 ">
+          <div className="relative z-10">
             <div className="flex p-6 gap-6 pb-8">
               <img
                 src={currentAlbum?.imageUrl}
@@ -87,7 +93,7 @@ const Album = () => {
                     <div
                       key={song._id}
                       className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm 
-                      text-zinc-400 hover:bg-white/5 rounded-md`}
+                      text-zinc-400 hover:bg-white/5 group rounded-md cursor-pointer`}
                     >
                       <div className="flex items-center justify-center">
                         <span className="group-hover:hidden">{index + 1}</span>
@@ -112,7 +118,9 @@ const Album = () => {
                         {song.createdAt.split("T")[0]}
                       </div>
 
-                      <div className="flex items-center">{song.duration}</div>
+                      <div className="flex items-center">
+                        {formatDuration(song.duration)}
+                      </div>
                     </div>
                   ))}
                 </div>
