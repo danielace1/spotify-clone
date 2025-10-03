@@ -8,9 +8,15 @@ interface MusicStore {
   isLoading: boolean;
   error: string | null;
   currentAlbum: Album | null;
+  featuredSongs: Song[];
+  madeForYouSongs: Song[];
+  trendingSongs: Song[];
 
   fetchAlbums: () => Promise<void>;
   fetchAlbumById: (id: string) => Promise<void>;
+  fetchFeaturedSongs: () => Promise<void>;
+  fetchMadeForYouSongs: () => Promise<void>;
+  fetchTrendingSongs: () => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
@@ -19,6 +25,9 @@ export const useMusicStore = create<MusicStore>((set) => ({
   isLoading: false,
   error: null,
   currentAlbum: null,
+  featuredSongs: [],
+  madeForYouSongs: [],
+  trendingSongs: [],
 
   fetchAlbums: async () => {
     set({ isLoading: true, error: null });
@@ -48,6 +57,57 @@ export const useMusicStore = create<MusicStore>((set) => ({
         error:
           error.response.data.message ||
           "An error occurred while fetching the album",
+      });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  fetchFeaturedSongs: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await axiosInstance.get("/songs/featured");
+      const data = res.data;
+      set({ featuredSongs: data });
+    } catch (error: any) {
+      set({
+        error:
+          error.response.data.message ||
+          "An error occurred while fetching featured songs",
+      });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  fetchMadeForYouSongs: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await axiosInstance.get("/songs/made-for-you");
+      const data = res.data;
+      set({ madeForYouSongs: data });
+    } catch (error: any) {
+      set({
+        error:
+          error.response.data.message ||
+          "An error occurred while fetching made for you songs",
+      });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  fetchTrendingSongs: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await axiosInstance.get("/songs/trending");
+      const data = res.data;
+      set({ trendingSongs: data });
+    } catch (error: any) {
+      set({
+        error:
+          error.response.data.message ||
+          "An error occurred while fetching trending songs",
       });
     } finally {
       set({ isLoading: false });
