@@ -4,6 +4,7 @@ import { useMusicStore } from "@/stores/useMusicStore";
 import FeaturedSection from "@/components/Home/FeaturedSection";
 import Topbar from "@/components/Topbar";
 import SectionGrid from "@/components/Home/SectionGrid";
+import { usePlayerStore } from "@/stores/usePlayerStore";
 
 const Home = () => {
   const {
@@ -16,13 +17,25 @@ const Home = () => {
     trendingSongs,
   } = useMusicStore();
 
+  const { initializeQueue } = usePlayerStore();
+
   useEffect(() => {
     fetchFeaturedSongs();
     fetchMadeForYouSongs();
     fetchTrendingSongs();
   }, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
 
-  console.log({ madeForYouSongs, featuredSongs, trendingSongs });
+  // console.log({ madeForYouSongs, featuredSongs, trendingSongs });
+
+  useEffect(() => {
+    if (
+      madeForYouSongs.length > 0 &&
+      featuredSongs.length > 0 &&
+      trendingSongs.length > 0
+    ) {
+      initializeQueue([...madeForYouSongs, ...featuredSongs, ...trendingSongs]);
+    }
+  }, [initializeQueue, madeForYouSongs, featuredSongs, trendingSongs]);
 
   return (
     <main className="rounded-md overflow-hidden h-full bg-gradient-to-b from-zinc-800 to-zinc-900">

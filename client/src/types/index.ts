@@ -1,4 +1,5 @@
 export interface Song {
+  audioUrl: string | null;
   _id: string;
   title: string;
   artist: string;

@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import AudioPlayer from "@/components/AudioPlayer";
 import FriendsActivity from "@/components/FriendsActivity";
 import LeftSidebar from "@/components/LeftSidebar";
 import {
@@ -5,16 +8,28 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Outlet } from "react-router-dom";
+import PlaybackControls from "@/components/PlaybackControls";
 
 const MainLayout = () => {
-  const isMobile = false;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   return (
-    <div className="h-screen bg-black text-white flex flex-col m-3">
+    <div className="h-screen bg-black text-white flex flex-col m-1.5 md:m-3">
       <ResizablePanelGroup
         direction="horizontal"
         className="flex-1 flex h-full overflow-hidden"
       >
+        <AudioPlayer />
+
         {/* left sidebar*/}
         <ResizablePanel
           defaultSize={20}
@@ -31,18 +46,24 @@ const MainLayout = () => {
           <Outlet />
         </ResizablePanel>
 
-        <ResizableHandle className="w-2 bg-black rounded-lg transition-colors" />
+        {!isMobile && (
+          <>
+            <ResizableHandle className="w-2 bg-black rounded-lg transition-colors" />
 
-        {/* Right sidebar */}
-        <ResizablePanel
-          defaultSize={20}
-          minSize={0}
-          maxSize={25}
-          collapsedSize={0}
-        >
-          <FriendsActivity />
-        </ResizablePanel>
+            {/* Right sidebar */}
+            <ResizablePanel
+              defaultSize={20}
+              minSize={0}
+              maxSize={25}
+              collapsedSize={0}
+            >
+              <FriendsActivity />
+            </ResizablePanel>
+          </>
+        )}
       </ResizablePanelGroup>
+
+      <PlaybackControls />
     </div>
   );
 };

@@ -52,10 +52,10 @@ const LeftSidebar = () => {
         </div>
       </div>
 
-      <div className="flex-1 rounded-lg bg-zinc-900 p-4">
-        <div className="flex items-center justify-between mb-4">
+      <div className="flex-1 rounded-lg bg-zinc-900 p-3 md:p-4">
+        <div className="flex items-center justify-center md:justify-between mb-4">
           <div className="flex items-center text-white px-2">
-            <Library className="size-5 mr-2" />
+            <Library className="size-5 md:mr-2" />
             <span className="hidden md:inline">PlayLists</span>
           </div>
         </div>
@@ -74,7 +74,7 @@ const LeftSidebar = () => {
                   <img
                     src={album.imageUrl}
                     alt={album.title}
-                    className="size-12 rounded-md flex-shrink-0 object-cover"
+                    className="size-10 md:size-12 rounded-md flex-shrink-0 object-cover"
                   />
                   <div className="flex-1 min-w-0 hidden md:block">
                     <p className="font-medium truncate">{album.title}</p>
