@@ -4,7 +4,6 @@ import cloudinary from "../lib/cloudinary.js";
 
 // helper function for cloudinary uploads
 const uploadToCloudinary = async (file) => {
-  const cloudinary = require("cloudinary").v2;
   try {
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
       resource_type: "auto",
