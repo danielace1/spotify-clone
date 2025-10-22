@@ -1,11 +1,13 @@
 import express from "express";
 import "dotenv/config";
 import path from "path";
+import { createServer } from "http";
 import cors from "cors";
 // import { withAuth } from "@clerk/clerk-sdk-node";
 import { clerkMiddleware } from "@clerk/express";
 import fileUpload from "express-fileupload";
 
+import { initializeSocket } from "./lib/socket.js";
 import { connectDB } from "./lib/db.js";
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -17,6 +19,9 @@ import statRoutes from "./routes/stat.route.js";
 const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const httpServer = createServer(app);
+initializeSocket(httpServer);
 
 app.use(
   cors({
@@ -59,9 +64,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   connectDB();
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
-
-// TODO: socket.io

@@ -7,6 +7,7 @@ import MainLayout from "./layout/MainLayout";
 import Chat from "./pages/Chat";
 import Album from "./pages/Album";
 import Admin from "./pages/Admin/Admin";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/albums/:albumId" element={<Album />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
       <Toaster />
